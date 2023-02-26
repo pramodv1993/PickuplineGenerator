@@ -34,13 +34,15 @@ class PromptConstructor:
 
     def construct(self):
         self._add_profiles()
+        self.reply_attr = ['witty'] if not len(self.reply_attr) else self.reply_attr
         if self.history:
             self._add_history(self.history)
-            reply_attr = ['witty'] if not len(self.reply_attr) else self.reply_attr
             self._add_reply_requirement(reply_attr=self.reply_attr, reply_to=self.reply_to)
-        
         else:
             #initial message
-            self.prompt += '''\n\nSuggest 3 messages each for P1 and P2 which has to be witty, funny: \nFrom P1 to P2:\n1) '''
+            self
+            self.prompt += "\n\nSuggest 3 messages each for P1 and P2 which has to be: "+\
+                (", ".join(self.reply_attr)) +\
+                ".\nFrom P1 to P2:" +\
+                "\n1) "
         return self.prompt
-

@@ -45,14 +45,13 @@ if __name__=="__main__":
         'favorite food':'vada pav', 
         'location': 'india'}
     )
-  history= ['''P2:Engineers know how to build things, but teachers know how to make things better - wanna join forces?
-  P1:Absolutely! I'm great with building, and you're great with bettering - let's get to work!
-  ''']
-  reply_to = 'P1'
+  history= ["P2:Engineers know how to build things, but teachers know how to make things better - wanna join forces?",\
+    "P1:Absolutely! I'm great with building, and you're great with bettering - let's get to work!",
+    "P2:Great minds think alike! Let's put our heads together and see what we can come up with."
+  ]
+  reply_to = 'P2'
   reply_attr = ['witty', 'funny', 'curious to know the other']
-
   prompt_constructor.update_details(history=history, reply_attr=reply_attr, reply_to=reply_to)
-  
   pickup = PickupLineGenerator()
   msgs = pickup.generate_messages(prompt_constructor=prompt_constructor)
   print(msgs)
