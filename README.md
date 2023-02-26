@@ -1,13 +1,14 @@
-### Pick-up Lines for Dating Apps
+## Pick-up Lines for Dating Apps
 Service for generating pick-up lines using GPT-3
 
-###Running
+### To run the app
 
- docker build -t pickupapp .
+- Build the docker image using: <br>
+`docker build -t pickupapp .`
  
- docker run -p 8000:8002 -t -i pickupapp
+- Run the container using: <br>
+`docker run -p 8000:8002 -t -i pickupapp`
 
-
-check localhost:8000/docs
- 
- 
+- Navigate to: <br>
+`localhost:8000/docs` <br> 
+in your browser.
