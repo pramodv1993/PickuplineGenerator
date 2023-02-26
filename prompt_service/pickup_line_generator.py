@@ -1,11 +1,11 @@
 import os
 import openai
 import yaml
-from prompt_constructor import PromptConstructor
+from prompt_service.prompt_constructor import PromptConstructor
 
 class PickupLineGenerator:
   def __init__(self):
-    self.config = yaml.safe_load(open('config.yaml', 'r'))
+    self.config = yaml.safe_load(open('prompt_service/config.yaml', 'r'))
     openai.api_key = self.config.get('key')
   
   def _parse_response(self, resps: str) -> str:
