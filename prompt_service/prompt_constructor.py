@@ -14,7 +14,7 @@ class PromptConstructor:
 
     def _add_history(self, history: List[str]):
         '''
-        history: ['P1:msg1', P2:'msg2'..]
+        history: ['P1:msg1', 'P2:msg2'..]
         '''
         self.prompt += ("\n\nP1 and P2's conversations so far:\n") +\
                          ('\n'.join(history))
