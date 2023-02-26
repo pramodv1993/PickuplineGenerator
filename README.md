@@ -12,3 +12,6 @@ Service for generating pick-up lines using GPT-3
 - Navigate to: <br>
 `localhost:8000/docs` <br> 
 in your browser.
+
+example request:<br>
+![Image](image.png)
