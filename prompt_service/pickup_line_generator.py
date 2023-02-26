@@ -31,7 +31,7 @@ class PickupLineGenerator:
       presence_penalty=0
     )
     choices = self._parse_response(response)
-    print(choices)
+    return choices
 
 
 if __name__=="__main__":
@@ -45,9 +45,8 @@ if __name__=="__main__":
         'favorite food':'vada pav', 
         'location': 'india'}
     )
-  history= ["P2:Engineers know how to build things, but teachers know how to make things better - wanna join forces?",\
-    "P1:Absolutely! I'm great with building, and you're great with bettering - let's get to work!",
-    "P2:Great minds think alike! Let's put our heads together and see what we can come up with."
+  history= ["P1:Hey P2, I heard you teach and I'm an engineer. Looks like the only thing we have in common is our love for vada pav!"
+  "P2:I'm surprised to find out that another engineer also loves vada pav! What made you fall for it?"
   ]
   reply_to = 'P2'
   msg_attr = ['witty', 'funny', 'curious to know the other']
