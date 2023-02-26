@@ -5,6 +5,9 @@ class PromptConstructor:
         self.prof1 = prof1
         self.prof2 = prof2
         self.prompt = "P1, P2 are two people."
+        self.history = None
+        self.msg_attr = ['witty', 'funny']
+        self.reply_to = None
 
     def _add_profiles(self):
         self.prompt += ('\nP1 has the profile:\n') +\
@@ -36,7 +39,7 @@ class PromptConstructor:
     
     def construct(self):
         self._add_profiles()
-        self.msg_attr = ['witty'] if not len(self.msg_attr) else self.msg_attr
+        self.msg_attr = ['witty'] if not self.msg_attr or not len(self.msg_attr) else self.msg_attr
         if self.history:
             self._add_history(self.history)
             self._add_msg_requirement(msg_attr=self.msg_attr, reply_to=self.reply_to)
