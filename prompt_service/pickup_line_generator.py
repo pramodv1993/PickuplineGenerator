@@ -52,6 +52,7 @@ if __name__=="__main__":
   reply_to = 'P2'
   msg_attr = ['witty', 'funny', 'curious to know the other']
   prompt_constructor.update_prompt(history=history, msg_attr=msg_attr, reply_to=reply_to)
+  # print(prompt_constructor.construct())
   pickup = PickupLineGenerator()
   msgs = pickup.generate_messages(prompt_constructor=prompt_constructor)
   print(msgs)
