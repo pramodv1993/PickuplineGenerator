@@ -18,7 +18,7 @@ class PickupLineGenerator:
           res.append([f"""{option}""".strip() for option in options if len(option)])
       return res
 
-  def generate_messages(self, prompt_constructor: PromptConstructor): 
+  def generate_messages(self, prompt_constructor: PromptConstructor):
     response = openai.Completion.create(
       model= self.config.get("model"),
       prompt=[
@@ -45,12 +45,13 @@ if __name__=="__main__":
         'favorite food':'vada pav', 
         'location': 'india'}
     )
-  history= ["P1:Hey P2, I heard you teach and I'm an engineer. Looks like the only thing we have in common is our love for vada pav!"
-  "P2:I'm surprised to find out that another engineer also loves vada pav! What made you fall for it?"
+  history= [
+  "P2:Hey P1, what's the engineering equivalent of vada pav?",
+  "P1: I think it's called Vada Pavtronics. Sounds cool, right?"
   ]
-  reply_to = 'P2'
+  reply_to = 'P1'
   msg_attr = ['witty', 'funny', 'curious to know the other']
-  prompt_constructor.update_prompt(history=history, msg_attr=msg_attr, reply_to=reply_to)
+  # prompt_constructor.update_prompt(history=history, msg_attr=msg_attr, reply_to=reply_to)
   # print(prompt_constructor.construct())
   pickup = PickupLineGenerator()
   msgs = pickup.generate_messages(prompt_constructor=prompt_constructor)

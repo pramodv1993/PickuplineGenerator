@@ -43,7 +43,7 @@ class PromptConstructor:
         else:
             #initial message
             self
-            self.prompt += "\n\nSuggest 3 messages each for P1 and P2 which has to be: "+\
+            self.prompt += "\n\nSuggest 3 messages for P1 and 3 messages for P2 which has to be: "+\
                 (", ".join(self.msg_attr)) +\
                 ".\nFrom P1 to P2:" +\
                 "\n1) "
