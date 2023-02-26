@@ -1,7 +1,7 @@
 import os
 import openai
 import yaml
-# from prompt_constructor import PromptConstructor
+from prompt_constructor import PromptConstructor
 
 class PickupLineGenerator:
   def __init__(self):
@@ -18,11 +18,11 @@ class PickupLineGenerator:
           res.append([f"""{option}""".strip() for option in options if len(option)])
       return res
 
-  def generate_messages(self): 
+  def generate_messages(self, prompt_constructor: PromptConstructor): 
     response = openai.Completion.create(
       model= self.config.get("model"),
       prompt=[
-        open('example_prompt.txt','r').read()#TODO Replace this with PromptConstructor service
+        prompt_constructor.construct()
       ],
       temperature=0.73,
       max_tokens=256,
@@ -35,5 +35,24 @@ class PickupLineGenerator:
 
 
 if __name__=="__main__":
+  prompt_constructor = PromptConstructor(
+        prof1={'name':'p1', 
+        'profession':'engineer', 
+        'favorite food':'noodles', 
+        'location':'germany'},
+        prof2={'name':'p2', 
+        'profession':'teacher', 
+        'favorite food':'vada pav', 
+        'location': 'india'}
+    )
+  history= ['''P2:Engineers know how to build things, but teachers know how to make things better - wanna join forces?
+  P1:Absolutely! I'm great with building, and you're great with bettering - let's get to work!
+  ''']
+  reply_to = 'P1'
+  reply_attr = ['witty', 'funny', 'curious to know the other']
+
+  prompt_constructor.update_details(history=history, reply_attr=reply_attr, reply_to=reply_to)
+  
   pickup = PickupLineGenerator()
-  pickup.generate_messages()
+  msgs = pickup.generate_messages(prompt_constructor=prompt_constructor)
+  print(msgs)

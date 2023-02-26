@@ -26,35 +26,21 @@ class PromptConstructor:
                         (', '.join(reply_attr)) +\
                         ':\n1) '
     
-    def construct(self, history: List[str]=None, reply_attr: List[str]=None, reply_to: str=None):
+    def update_details(self, history: List[str]=None, reply_attr: List[str]=None, reply_to: str=None):
+        self.history = history
+        self.reply_attr = reply_attr
+        self.reply_to = reply_to
+        return self
+
+    def construct(self):
         self._add_profiles()
-        if history:
-            self._add_history(history)
-            reply_attr = ['witty'] if not len(reply_attr) else reply_attr
-            self._add_reply_requirement(reply_attr=reply_attr, reply_to=reply_to)
+        if self.history:
+            self._add_history(self.history)
+            reply_attr = ['witty'] if not len(self.reply_attr) else self.reply_attr
+            self._add_reply_requirement(reply_attr=self.reply_attr, reply_to=self.reply_to)
         
         else:
             #initial message
             self.prompt += '''\n\nSuggest 3 messages each for P1 and P2 which has to be witty, funny: \nFrom P1 to P2:\n1) '''
         return self.prompt
-        
-        
-
-if __name__=="__main__":
-    prompt = PromptConstructor(
-        prof1={'name':'p1', 
-        'profession':'engineer', 
-        'favorite food':'noodles', 
-        'location':'germany'},
-        prof2={'name':'p2', 
-        'profession':'teacher', 
-        'favorite food':'vada pav', 
-        'location': 'india'}
-    )
-    history= ['''P1:Hey P2, I'm sure teaching must be a demanding job - but at least you get to enjoy some delicious snacks during breaks!''']
-    reply_to = 'P1'
-    reply_attr = ['witty', 'funny', 'curious to know P1']
-    # print(prompt.construct())
-    print(prompt.construct(history=history, reply_attr=reply_attr, reply_to=reply_to))
-
 
