@@ -50,8 +50,8 @@ if __name__=="__main__":
     "P2:Great minds think alike! Let's put our heads together and see what we can come up with."
   ]
   reply_to = 'P2'
-  reply_attr = ['witty', 'funny', 'curious to know the other']
-  prompt_constructor.update_details(history=history, reply_attr=reply_attr, reply_to=reply_to)
+  msg_attr = ['witty', 'funny', 'curious to know the other']
+  prompt_constructor.update_prompt(history=history, msg_attr=msg_attr, reply_to=reply_to)
   pickup = PickupLineGenerator()
   msgs = pickup.generate_messages(prompt_constructor=prompt_constructor)
   print(msgs)
