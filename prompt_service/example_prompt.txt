@@ -1,23 +1,42 @@
 P1, P2 are two people.
 P1 has the profile:
-name: p1
-location: india 
-hobby: books, movies 
-profession: doctor 
-celebrity crush: einstein 
+name:p1
+profession:engineer
+favorite food:noodles
+location:germany
+
+without history
+----
+P1, P2 are two people.
+P1 has the profile:
+name:p1
+profession:engineer
+favorite food:noodles
+location:germany
 
 P2 has the profile:
-name: p2
-location: germany
-hobby: swimming, karate
-profession: engineer
-about me: i secretly like indian cuisine
-food: shnitzel
+name:p2
+profession:teacher
+favorite food:vada pav
+location:india
+
+Suggest 3 messages for P1 which has to be: witty, funny. 
+1)
+
+
+___________
+
+with history
+----
+
+P2 has the profile:
+name:p2
+profession:teacher
+favorite food:vada pav
+location:india
 
 P1 and P2's conversations so far:
-P1: Shall we combine our love for shnitzel and Germany, and create something amazing!
-P2: Why don't we try to make a Noodle-German hybrid, and see what happens
-P1: Sounds like a delicious experiment! What is your favorite German dish?
+P1:Hey P2, looks like you are a teacher who loves Vada Pav and I'm an engineer who loves noodles! Let's swap recipes!
 
-Suggest 3 messages for P2 in response to P1 which has to be witty, funny:
+Suggest 3 messages for P2 in response to P1 which has to be witty, funny, curious to know the other:
 1)

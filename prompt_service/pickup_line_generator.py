@@ -1,4 +1,5 @@
 import os
+import re
 import openai
 import yaml
 from prompt_service.prompt_constructor import PromptConstructor
@@ -12,18 +13,17 @@ class PickupLineGenerator:
       if not resps:
           return []
       res = []
-      for resp in resps.get('choices', []):
-          text = resp.get('text')
-          options = text.split('\n')
-          res.append([f"""{option}""".strip() for option in options if len(option)])
+      choices = resps.get('choices', [])
+      if len(choices):
+        text = choices[0].get('text', '')
+        options = text.split('\n')
+        res = [f"{re.sub('^[0-9)]+', '', option)}".strip() for option in options if len(option)]
       return res
 
   def generate_messages(self, prompt_constructor: PromptConstructor):
     response = openai.Completion.create(
       model= self.config.get("model"),
-      prompt=[
-        prompt_constructor.construct()
-      ],
+      prompt=prompt_constructor.construct(),
       temperature=0.73,
       max_tokens=256,
       top_p=1,
@@ -43,16 +43,16 @@ if __name__=="__main__":
         prof2={'name':'p2', 
         'profession':'teacher', 
         'favorite food':'vada pav', 
-        'location': 'india'}
+        'location': 'india'},
+        sender='P1'
     )
   history= [
-  "P2:Hey P1, what's the engineering equivalent of vada pav?",
-  "P1: I think it's called Vada Pavtronics. Sounds cool, right?"
+  "P1:Hey P2, looks like you are a teacher who loves Vada Pav and I'm an engineer who loves noodles! Let's swap recipes!"
   ]
-  reply_to = 'P1'
+  sender = 'P2'
   msg_attr = ['witty', 'funny', 'curious to know the other']
-  # prompt_constructor.update_prompt(history=history, msg_attr=msg_attr, reply_to=reply_to)
-  # print(prompt_constructor.construct())
+  # prompt_constructor.update_prompt(history=history, sender=sender, msg_attr=msg_attr)
+  print(prompt_constructor.construct())
   pickup = PickupLineGenerator()
   msgs = pickup.generate_messages(prompt_constructor=prompt_constructor)
   print(msgs)

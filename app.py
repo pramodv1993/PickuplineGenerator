@@ -10,12 +10,12 @@ app = FastAPI()
 class MsgRequest(BaseModel):
     profile1: dict={"name":"p1", "profession":"engineer", "favorite food":"noodles"}
     profile2: dict={"name":"p2", "profession":"doctor", "favorite location":"iceland", "location": "germany"}
-    reply_to: Union[str, None] = None
-    msg_attr: Union[List[str], None] = None
+    sender: Union[str, None] = None
+    msg_attr: List[str] = ['witty']
     history: Union[List[str], None] = None
 
 class MsgResponse(MsgRequest):
-    choices: Union[List[List[str]], None] = None
+    choices: Union[List[str], None] = None
 
 @app.get("/")
 def read_root():
@@ -28,7 +28,7 @@ def get_pickup_line(msg_req: MsgRequest) -> MsgResponse:
         {\n
             "profile1": {"name":"p1", "profession":"engineer", "favorite food":"noodles"},\n
             "profile2": {"name":"p1", "profession":"engineer", "favorite food":"noodles"},\n
-            "reply_to": "P2",\n
+            "sender": "P1",\n
             "msg_attr": [\n
                 "witty",\n
                 "funny",\n
@@ -40,11 +40,17 @@ def get_pickup_line(msg_req: MsgRequest) -> MsgResponse:
             ]\n
         }\n
     """
-    prompt_constructor=PromptConstructor(prof1=msg_req.profile1, prof2=msg_req.profile2)
+    if not msg_req.msg_attr:
+        raise Exception("Please specify message attributes!")
+    if not msg_req.sender:
+        raise Exception("Please specify sender!")
+    prompt_constructor=PromptConstructor(prof1=msg_req.profile1, 
+                                        prof2=msg_req.profile2,
+                                        sender=msg_req.sender,
+                                        msg_attr=msg_req.msg_attr)
     if msg_req.history:
         prompt_constructor.update_prompt(history=msg_req.history,
-                                         msg_attr=msg_req.msg_attr,
-                                        reply_to=msg_req.reply_to)
+                                         msg_attr=msg_req.msg_attr)
     pickup = PickupLineGenerator()
     msgs = pickup.generate_messages(prompt_constructor=prompt_constructor)
     msg_resp = MsgResponse(**msg_req.dict())

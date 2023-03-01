@@ -1,7 +1,7 @@
 from typing import List
 
 class PromptConstructor:
-    def __init__(self, prof1: dict, prof2: dict):
+    def __init__(self, prof1: dict, prof2: dict, sender: str, msg_attr: str):
         '''
         history: ['P1:msg1', 'P2:msg2'..]
         msg_attr: ['witty', 'funny'...]
@@ -11,8 +11,10 @@ class PromptConstructor:
         self.prof2 = prof2
         self.prompt = "P1, P2 are two people."
         self.history = None
-        self.msg_attr = ['witty', 'funny']
-        self.reply_to = None
+        self.msg_attr = msg_attr
+        self.sender = sender
+        if not self.sender:
+            raise Exception("Please specify sender")
 
     def _add_profiles(self):
         self.prompt += ('\nP1 has the profile:\n') +\
@@ -24,27 +26,23 @@ class PromptConstructor:
         self.prompt += ("\n\nP1 and P2's conversations so far:\n") +\
                          ('\n'.join(self.history))
     
-    def _add_msg_requirement(self):
-        _from = 'P1' if self.reply_to=='P2' else 'P2'
-        self.prompt += (f'\n\nSuggest 3 messages for {_from} in response to {self.reply_to} which has to be ') +\
+    def _add_sender_and_receiver_info(self):
+        self.prompt += (f"\n\nSuggest 3 messages for {self.sender} in response to {'P1' if self.sender=='P2' else 'P1'} which has to be ") +\
                         (', '.join(self.msg_attr)) +\
                         ':\n1) '
     
-    def update_prompt(self, history: List[str]=None, msg_attr: List[str]=None, reply_to: str=None):
+    def update_prompt(self, history: List[str]=None, msg_attr: List[str]=None, sender: str=None):
         self.history = history
         self.msg_attr = msg_attr
-        self.reply_to = reply_to
+        self.sender = sender
     
     def construct(self):
         self._add_profiles()
         if self.history:
             self._add_history()
-            self._add_msg_requirement()
+            self._add_sender_and_receiver_info()
         else:
-            #initial message
-            self
-            self.prompt += "\n\nSuggest 3 messages for P1 and 3 messages for P2 which has to be: "+\
+            self.prompt += f"\n\nSuggest 3 messages for {self.sender} which has to be: "+\
                 (", ".join(self.msg_attr)) +\
-                ".\nFrom P1 to P2:" +\
-                "\n1) "
+                ". \n1) "
         return self.prompt
