@@ -1,11 +1,19 @@
 import json
 from typing import Union, List
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from prompt_service.prompt_constructor import PromptConstructor
 from prompt_service.pickup_line_generator import PickupLineGenerator
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 class MsgRequest(BaseModel):
     profile1: dict={"name":"p1", "profession":"engineer", "favorite food":"noodles"}
@@ -50,7 +58,9 @@ def get_pickup_line(msg_req: MsgRequest) -> MsgResponse:
                                         msg_attr=msg_req.msg_attr)
     if msg_req.history:
         prompt_constructor.update_prompt(history=msg_req.history,
-                                         msg_attr=msg_req.msg_attr)
+                                         msg_attr=msg_req.msg_attr,
+                                         sender=msg_req.sender
+                                        )
     pickup = PickupLineGenerator()
     msgs = pickup.generate_messages(prompt_constructor=prompt_constructor)
     msg_resp = MsgResponse(**msg_req.dict())

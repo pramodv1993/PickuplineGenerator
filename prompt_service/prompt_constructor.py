@@ -27,7 +27,7 @@ class PromptConstructor:
                          ('\n'.join(self.history))
     
     def _add_sender_and_receiver_info(self):
-        self.prompt += (f"\n\nSuggest 3 messages for {self.sender} in response to {'P1' if self.sender=='P2' else 'P1'} which has to be ") +\
+        self.prompt += (f"\n\nSuggest 3 messages for {self.sender} in response to {'P1' if self.sender=='P2' else 'P2'} which has to be ") +\
                         (', '.join(self.msg_attr)) +\
                         ':\n1) '
     
@@ -45,4 +45,5 @@ class PromptConstructor:
             self.prompt += f"\n\nSuggest 3 messages for {self.sender} which has to be: "+\
                 (", ".join(self.msg_attr)) +\
                 ". \n1) "
+        print(self.prompt)
         return self.prompt
