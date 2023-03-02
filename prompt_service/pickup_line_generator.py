@@ -17,7 +17,7 @@ class PickupLineGenerator:
       if len(choices):
         text = choices[0].get('text', '')
         options = text.split('\n')
-        res = [f"{re.sub('^[0-9)]+', '', option)}".strip() for option in options if len(option)]
+        res = [f"{re.sub('^[0-9)]+', '', option)}".replace("\"","").strip() for option in options if len(option)]
       return res
 
   def generate_messages(self, prompt_constructor: PromptConstructor):
@@ -53,7 +53,7 @@ if __name__=="__main__":
   Msg(sender='P2', msg="Wow, an engineer from Germany wanting to learn the art of making Vada Pav! I'm flattered. Of course, I can share with you my secret recipe.")
   ]
   sender = 'P1'
-  prompt_constructor.update_prompt(history=history, sender=sender, msg_attr=msg_attr)
+  # prompt_constructor.update_prompt(history=history, sender=sender, msg_attr=msg_attr)
   print(prompt_constructor.construct())
   pickup = PickupLineGenerator()
   msgs = pickup.generate_messages(prompt_constructor=prompt_constructor)

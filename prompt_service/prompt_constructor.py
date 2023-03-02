@@ -9,7 +9,7 @@ class PromptConstructor:
         '''
         self.prof1 = prof1
         self.prof2 = prof2
-        self.prompt = "P1, P2 are two people."
+        self.prompt = "There are two persons meeting on a dating platform:"
         self.history = None
         self.msg_attr = msg_attr
         self.sender = sender
@@ -17,9 +17,9 @@ class PromptConstructor:
             raise Exception("Please specify sender")
 
     def _add_profiles(self):
-        self.prompt += ('\nP1 has the profile:\n') +\
+        self.prompt += ('\nPerson P1:\n') +\
                         ('\n'.join([f'{str(k)}:{str(v)}' for k,v in self.prof1.items()]))
-        self.prompt += ('\n\nP2 has the profile:\n') + \
+        self.prompt += ('\n\nPerson P2:\n') + \
                          ('\n'.join([f'{str(k)}:{str(v)}' for k,v in self.prof2.items()]))
 
     def _add_history(self):
@@ -28,9 +28,11 @@ class PromptConstructor:
                          ('\n'.join(history_seq_as_str))
     
     def _add_sender_and_receiver_info(self):
-        self.prompt += (f"\n\nSuggest 3 messages for {self.sender} in response to {'P1' if self.sender=='P2' else 'P2'} which has to be ") +\
-                        (', '.join(self.msg_attr)) +\
-                        ':\n1) '
+        #Generate 3 witty, funny replies to p<1|2> by using p<1|2>'s profile.
+        self.prompt += (f"\nGenerate  3 " +\
+             (', '.join(self.msg_attr)) +\
+             f" replies to {self.sender} by using new facts from {'P1' if self.sender=='P2' else 'P2'}'s profile") +\
+             ':\n1) '
     
     def update_prompt(self, history: List[Msg]=None, msg_attr: List[str]=None, sender: str=None):
         self.history = history
@@ -43,8 +45,9 @@ class PromptConstructor:
             self._add_history()
             self._add_sender_and_receiver_info()
         else:
-            self.prompt += f"\n\nSuggest 3 messages for {self.sender} which has to be: "+\
+            #Suggest 3 creative, witty, interesting, poetic, short pick-up lines for p1 using the profile from p2.
+            self.prompt += f"\n\nSuggest 3 " +\
                 (", ".join(self.msg_attr)) +\
-                ". \n1) "
-        print(self.prompt)
+                f" pick-up lines for {self.sender} using the profile from {'P1' if self.sender=='P2' else 'P2'}" +\
+                ": \n1) "
         return self.prompt
