@@ -31,7 +31,7 @@ class PromptConstructor:
         #Generate 3 witty, funny replies to p<1|2> by using p<1|2>'s profile.
         self.prompt += (f"\nGenerate  3 " +\
              (', '.join(self.msg_attr)) +\
-             f" replies to {self.sender} by using new facts from {'P1' if self.sender=='P2' else 'P2'}'s profile") +\
+             f" replies to {self.sender} by using {'P1' if self.sender=='P2' else 'P2'}'s profile") +\
              ':\n1) '
     
     def update_prompt(self, history: List[Msg]=None, msg_attr: List[str]=None, sender: str=None):
@@ -50,4 +50,5 @@ class PromptConstructor:
                 (", ".join(self.msg_attr)) +\
                 f" pick-up lines for {self.sender} using the profile from {'P1' if self.sender=='P2' else 'P2'}" +\
                 ": \n1) "
+        print(self.prompt)        
         return self.prompt
