@@ -50,10 +50,12 @@ if __name__=="__main__":
     )
   history= [
   Msg(sender="P1", msg="Hey P2, I'm P1 from Germany. I heard your favorite food is Vada Pav. Do you have any tips on how to make the perfect Vada Pav?"),
-  Msg(sender='P2', msg="Wow, an engineer from Germany wanting to learn the art of making Vada Pav! I'm flattered. Of course, I can share with you my secret recipe.")
+  Msg(sender='P2', msg="Wow, an engineer from Germany wanting to learn the art of making Vada Pav! I'm flattered. Of course, I can share with you my secret recipe."),
+  Msg(sender='P1', msg="Hey P2, I'm P1 from Germany. I'm an engineer and I love noodles! Have you ever tried eating noodles with Vada Pav? I'm sure it would be a delicious combination!"),
+  Msg(sender='P2', msg="I'm sure noodles and Vada Pav would be a match made in heaven! Have you ever tried it before?")
   ]
   sender = 'P1'
-  # prompt_constructor.update_prompt(history=history, sender=sender, msg_attr=msg_attr)
+  prompt_constructor.update_prompt(history=history, sender=sender, msg_attr=msg_attr)
   print(prompt_constructor.construct())
   pickup = PickupLineGenerator()
   msgs = pickup.generate_messages(prompt_constructor=prompt_constructor)
