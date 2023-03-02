@@ -7,7 +7,7 @@ from prompt_service.models import Msg
 class PickupLineGenerator:
   def __init__(self):
     self.config = yaml.safe_load(open('prompt_service/config.yaml', 'r'))
-    openai.api_key = self.config.get('key')
+    openai.api_key = os.getenv("KEY")
   
   def _parse_response(self, resps: str) -> str:
       if not resps:
