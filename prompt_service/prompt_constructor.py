@@ -1,5 +1,5 @@
 from typing import List
-
+from prompt_service.models import Msg
 class PromptConstructor:
     def __init__(self, prof1: dict, prof2: dict, sender: str, msg_attr: str):
         '''
@@ -23,15 +23,16 @@ class PromptConstructor:
                          ('\n'.join([f'{str(k)}:{str(v)}' for k,v in self.prof2.items()]))
 
     def _add_history(self):
+        history_seq_as_str = [f"{msg_obj.sender}: {msg_obj.msg}" for msg_obj in self.history]
         self.prompt += ("\n\nP1 and P2's conversations so far:\n") +\
-                         ('\n'.join(self.history))
+                         ('\n'.join(history_seq_as_str))
     
     def _add_sender_and_receiver_info(self):
         self.prompt += (f"\n\nSuggest 3 messages for {self.sender} in response to {'P1' if self.sender=='P2' else 'P2'} which has to be ") +\
                         (', '.join(self.msg_attr)) +\
                         ':\n1) '
     
-    def update_prompt(self, history: List[str]=None, msg_attr: List[str]=None, sender: str=None):
+    def update_prompt(self, history: List[Msg]=None, msg_attr: List[str]=None, sender: str=None):
         self.history = history
         self.msg_attr = msg_attr
         self.sender = sender
