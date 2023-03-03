@@ -17,7 +17,15 @@ class PickupLineGenerator:
       if len(choices):
         text = choices[0].get('text', '')
         options = text.split('\n')
-        res = [f"{re.sub('^[0-9)]+', '', option)}".replace("\"","").strip() for option in options if len(option)]
+        for option in options:
+          option = option.strip()
+
+          if not option:
+            continue
+
+          option = re.sub('^[0-9)]*[\s*P1-2:]*', '', option)
+          option = option.replace('"', "")
+          res.append(option)
       return res
 
   def generate_messages(self, prompt_constructor: PromptConstructor):

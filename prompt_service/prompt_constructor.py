@@ -28,11 +28,16 @@ class PromptConstructor:
                          ('\n'.join(history_seq_as_str))
     
     def _add_sender_and_receiver_info(self):
-        #Generate 3 witty, funny replies to p<1|2> by using p<1|2>'s profile.
-        self.prompt += f"\n\nGenerate  3 " +\
-             (', '.join(self.msg_attr)) +\
-             f""" replies to {'P1' if self.sender=='P2' else 'P2'} by using{" new facts from " if len(self.history) == 3 else " "}{'P1' if self.sender=='P2' else 'P2'}'s profile""" +\
-             ':\n1) '
+        # Generate 3 witty, funny replies to p<1|2> by using p<1|2>'s profile.
+        self.prompt += f"\n\nGenerate 3 " +\
+            (', '.join(self.msg_attr))
+    
+        if len(self.history) == 3:
+            self.prompt += f""" messages to {'P1' if self.sender=='P2' else 'P2'} including an answer to the previous message and a follow up question"""
+        else:
+            self.prompt += f""" replies to {'P1' if self.sender=='P2' else 'P2'} by using {'P1' if self.sender=='P2' else 'P2'}'s profile"""
+        
+        self.prompt += ": \n1) "
     
     def update_prompt(self, history: List[Msg]=None, msg_attr: List[str]=None, sender: str=None):
         self.history = history
